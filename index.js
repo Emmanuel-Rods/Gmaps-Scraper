@@ -8,9 +8,9 @@ puppeteerExtra.use(Stealth());
 
 const disableFilters = false;
 
-const categories = ["scaffolding hire"];
+const categories = ["Scaffolding hire", "Skip hire"];
 
-const cities = ["London"];
+const cities = ["London", "Manchester"];
 
 async function scraper(business, place) {
   createFolder(place); //changed from business to place
@@ -51,16 +51,14 @@ async function scraper(business, place) {
     console.log(`Opening link: ${href}`);
 
     try {
-
       const newPage = await page.browser().newPage();
       await newPage.goto(href, { waitUntil: "domcontentloaded" });
 
-  
       const name = await newPage.evaluate(() => {
         const element = document.querySelector("h1.DUwDvf.lfPIob");
         return element ? element.textContent.trim() : null;
       });
-    
+
       const category = await newPage.evaluate(() => {
         const categoryButton = document.querySelector(
           'button[jsaction^="pane."][jsaction$=".category"]'
@@ -98,15 +96,18 @@ async function scraper(business, place) {
         return element ? element.href : null;
       });
 
+      const email = null;
+
       await newPage.close();
 
       if (disableFilters) {
         data.push({
           name,
-          website,
           phoneNumber,
-          category,
+          email,
+          website,
           address,
+          category,
         });
       } else {
         if (
@@ -122,10 +123,11 @@ async function scraper(business, place) {
           // Push the data
           data.push({
             name,
-            website,
             phoneNumber,
-            category,
+            email,
+            website,
             address,
+            category,
           });
         }
       }
@@ -157,11 +159,11 @@ function createFolder(name) {
   const folderPath = path.join(__dirname, "excelFiles", name);
 
   if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true }); 
+    fs.mkdirSync(folderPath, { recursive: true });
     console.log(`Folder '${name}' created at ${folderPath}`);
   }
 
-  return folderPath; 
+  return folderPath;
 }
 
 //  to save business data to Excel
@@ -193,7 +195,6 @@ function saveDataToExcel(data, folderName, fileName) {
 }
 
 async function runScraper() {
-
   for (
     let categoryIndex = 0;
     categoryIndex < categories.length;
@@ -207,7 +208,7 @@ async function runScraper() {
       // Run the scraper for the current category and city
       try {
         console.log(`Scraping data for category: ${category}, city: ${city}`);
-        await scraper(category, city); 
+        await scraper(category, city);
       } catch (error) {
         console.error(`Error scraping ${category} in ${city}:`, error);
       }
@@ -219,4 +220,3 @@ async function runScraper() {
 }
 
 runScraper();
-

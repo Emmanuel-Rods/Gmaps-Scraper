@@ -1,0 +1,7 @@
+Copyright © 2024 Roger Rodrigues. All rights reserved.
+
+This software is proprietary and was commissioned by RITIK JHA . It is intended exclusively for the use of the client and may not be copied, modified, distributed, or used by any other parties without explicit written permission from the author.
+
+This software includes dependencies licensed under their respective open-source licenses, including Puppeteer, which is distributed under the Apache 2.0 License. The terms of those licenses govern your use of those dependencies.
+
+For inquiries, contact: alewsor@gmail.com

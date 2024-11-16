@@ -1,0 +1,17 @@
+{
+  "name": "gmaps-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "bot" : "node index.js"
+  },
+  "author": "Roger Rodrigues",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "puppeteer": "^23.7.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "xlsx": "^0.18.5"
+  }
+}

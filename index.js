@@ -6,11 +6,11 @@ const path = require("path");
 
 puppeteerExtra.use(Stealth());
 
-const disableFilters = false;
+const disableFilters = true;
 
-const categories = ["Scaffolding hire", "Skip hire"];
+const categories = ["Skip hire" , "Electrician"];
 
-const cities = ["London", "Manchester"];
+const cities = ["London" , "Manchester"];
 
 async function scraper(business, place) {
   createFolder(place); //changed from business to place
@@ -110,15 +110,16 @@ async function scraper(business, place) {
           category,
         });
       } else {
+        if (phoneNumber && !phoneNumber.startsWith("+44 7")) {
+          phoneNumber = null;
+        }
+
         if (
           (website !== null || phoneNumber !== null) &&
           (address.includes(place) ||
             name.includes(place) ||
             (website && website.includes(place.toLowerCase())))
         ) {
-          if (phoneNumber && !phoneNumber.startsWith("+44 7")) {
-            phoneNumber = null;
-          }
 
           // Push the data
           data.push({
@@ -196,15 +197,14 @@ function saveDataToExcel(data, folderName, fileName) {
 
 async function runScraper() {
   for (
-    let categoryIndex = 0;
-    categoryIndex < categories.length;
-    categoryIndex++
+    let cityIndex = 0; cityIndex < cities.length; cityIndex++
   ) {
-    const category = categories[categoryIndex];
-
-    for (let cityIndex = 0; cityIndex < cities.length; cityIndex++) {
-      const city = cities[cityIndex];
-
+    const city = cities[cityIndex];
+    for (  let categoryIndex = 0;
+      categoryIndex < categories.length;
+      categoryIndex++) {
+    
+      const category = categories[categoryIndex];
       // Run the scraper for the current category and city
       try {
         console.log(`Scraping data for category: ${category}, city: ${city}`);

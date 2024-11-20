@@ -110,17 +110,16 @@ async function scraper(business, place) {
           category,
         });
       } else {
-        if (phoneNumber && !phoneNumber.startsWith("+44 7")) {
-          phoneNumber = null;
-        }
-
+       if (phoneNumber && !phoneNumber.startsWith("+44 7")) {
+            phoneNumber = null;
+          }
         if (
           (website !== null || phoneNumber !== null) &&
           (address.includes(place) ||
             name.includes(place) ||
             (website && website.includes(place.toLowerCase())))
         ) {
-
+  
           // Push the data
           data.push({
             name,
